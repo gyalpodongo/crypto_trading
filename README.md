@@ -1,5 +1,5 @@
 # Coinbase Bitcoin Basic Bot
-Basic Trading Algorithm for Bitcoin using Coinbase API
+Basic Trading Algorithms for cryptocurrencies using different exchanges API
 
 ## Installation
 
