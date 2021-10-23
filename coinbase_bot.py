@@ -27,7 +27,7 @@ class Coinbot:
         #self.client.buy(amount=str(user_amount_spent / float(buy_price.amount)), currency=self.currency_code, payment_method = self.payment_method.id )
         print(f" Bought bitcoin ({self.currency_code}) {user_amount_spent} or {user_amount_spent/ float(buy_price.amount)} bitcoin at {buy_price.amount} ({self.currency_code})")
     
-    def trade(self, interactive = False):
+    def trade_basic(self, interactive = False):
         #Following lines get inputs from the user such as the currency they use, the limit order and the amount spent
         user_limit_order = float(input(f"Enter a price for your bitcoin limit order in {self.currency_code}: "))
         user_amount_spent = float(input(f"Enter how much you want to spend in {self.currency_code}: "))
