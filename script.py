@@ -8,7 +8,7 @@ def percentage_change(a : float,b: float) -> float:
     """
     Takes two string numbers and returns their percentage change
     """
-    return (float(a)-float(b))/float(a) * 100
+    return (float(b)-float(a))/float(a) * 100
 
 #setting our client to link our account to our code
 client = Client(api_key,api_secret)
@@ -39,7 +39,8 @@ while True:
     #print bitcoin current price and percentage change
 
     print(f"Bitcoin is {buy_price.amount} \nPercent change in last {t} seconds: {round(percentage_gainloss,3)} %")
-    answer = input("Do you want to buy? (Enter Y or N) ").lower()
+    #answer = input("Do you want to buy? (Enter Y or N) ").lower()
+    answer = "y"
 
     if(float(buy_price.amount) <= user_limit_order) and answer == "y":
         #buy = client.buy(amount=str(user_amount_spent / float(buy_price.amount)), currency=currency_code, payment_method = payment_method.id )
