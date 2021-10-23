@@ -1,4 +1,4 @@
-# cryto_trading
+# Coinbase Bitcoin Basic Bot
 Basic Trading Algorithm for Bitcoin using Coinbase API
 
 ## Installation
