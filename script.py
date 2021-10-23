@@ -6,20 +6,28 @@ from data import api_key, api_secret
 
 def percentage_change(a : float,b: float) -> float:
     """
-    Takes two floats and returns their percentage change
+    Takes two string numbers and returns their percentage change
     """
-    return (a-b)/a * 100
+    return (float(a)-float(b))/float(a) * 100
 
 #setting our client to link our account to our code
 client = Client(api_key,api_secret)
 #payment_method = client.get_payment_methods()[0] #Gets main form of payment from your coinbase account
 
 #Following lines get inputs from the user such as the currency they use, the limit order and the amount spent
-currency_code= str(input("What currency are you using? (Please enter in 3 character valid format e.g. USD): "))
+
+#API does not seem to support other currencies than USD
+#currency_code= str(input("What currency are you using? (Please enter in 3 character valid format e.g. USD): "))
+
+currency_code = "USD"
+
+
 
 user_limit_order = float(input(f"Enter a price for your bitcoin limit order in {currency_code}: "))
 
-user_amount_spent = float(input(f"Enter how much you want to spend in {currency_code} :"))
+user_amount_spent = float(input(f"Enter how much you want to spend in {currency_code}: "))
+
+t = int(input("How often do you want tochekc the percentage gain loss? Enter integer in seconds: "))
 
 start_price = client.get_spot_price(currency = currency_code)
 
@@ -30,12 +38,19 @@ while True:
 
     #print bitcoin current price and percentage change
 
-    if(float(buy_price.amount) <= user_limit_order):
+    print(f"Bitcoin is {buy_price.amount} \nPercent change in last {t} seconds: {round(percentage_gainloss,3)} %")
+    answer = input("Do you want to buy? (Enter Y or N) ").lower()
+
+    if(float(buy_price.amount) <= user_limit_order) and answer == "y":
         #buy = client.buy(amount=str(user_amount_spent / float(buy_price.amount)), currency=currency_code, payment_method = payment_method.id )
 
-        print(f"Bitcoin ({currency_code}) {user_amount_spent} or {user_amount_spent/ float(buy_price.amount)} bitcoin at {buy_price.amount} ({currency_code})")
+        print(f" Bought bitcoin ({currency_code}) {user_amount_spent} or {user_amount_spent/ float(buy_price.amount)} bitcoin at {buy_price.amount} ({currency_code})")
+        break
+    else:
+        print(f"Checking again after {t} seconds")
 
-    sleep(60) 
+    #Checks again after t seconds
+    sleep(t) 
 
     #Update start_price
     start_price = buy_price
