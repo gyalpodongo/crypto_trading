@@ -1,2 +1,2 @@
 # cryto_trading
-Basic Trading Algorithm for Crypto using Coinbase API
+Basic Trading Algorithm for Bitcoin using Coinbase API

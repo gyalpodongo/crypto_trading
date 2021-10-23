@@ -27,4 +27,15 @@ while True:
     #Reset current values and finds percentage changes
     buy_price = client.get_buy_price(currency = currency_code)
     percentage_gainloss = percentage_change(start_price.amount, buy_price.amount)
-    
+
+    #print bitcoin current price and percentage change
+
+    if(float(buy_price.amount) <= user_limit_order):
+        #buy = client.buy(amount=str(user_amount_spent / float(buy_price.amount)), currency=currency_code, payment_method = payment_method.id )
+
+        print(f"Bitcoin ({currency_code}) {user_amount_spent} or {user_amount_spent/ float(buy_price.amount)} bitcoin at {buy_price.amount} ({currency_code})")
+
+    sleep(60) 
+
+    #Update start_price
+    start_price = buy_price
