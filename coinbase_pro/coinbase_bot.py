@@ -1,12 +1,11 @@
 import cbpro
 import time
-from data import sandbox_key,sandbox_pass,sandbox_secret
+from data import sandbox_key,sandbox_pass,sandbox_secret,btc_id,usd_id
 api_url = "https://api-public.sandbox.pro.coinbase.com"
 
 client = cbpro.AuthenticatedClient(sandbox_key,sandbox_secret,sandbox_pass, api_url = api_url)
 ticker_id = 'BTC-USD'
-btc_id = '20dbdb66-882f-451e-96ab-bb57a838f4cf'
-usd_id = '71a6eee3-1327-4e92-8c4a-05f51e1aa9f4'
+
 
 def get_size():
     #global btc_account
@@ -34,14 +33,20 @@ def latest_price(type):
 
 while True:
     current_price = get_price()
-    buy_price = latest_price('buy')
-    sell_price = latest_price('sell')
-    if (current_price - buy_price)/buy_price > 0.03:
-        client.place_market_order(ticker_id, side ='sell', size = get_size())
+    latest_buy_price = latest_price('buy')
+    latest_sell_price = latest_price('sell')
+    size = get_size()
+    funds = get_funds()
+    sell_change = (current_price - latest_buy_price)/latest_buy_price 
+    buy_change = (latest_sell_price - current_price)/latest_sell_price
+    if sell_change > 0.03 and size > 0.000021: 
+        response = client.place_market_order(ticker_id, side ='sell', size = size)
+        print(response)
         print("Sold at a profit")
-    elif (sell_price - current_price)/current_price > 0.03:
-        client.place_market_order(ticker_id, side ='buy', funds = get_funds())
+    elif buy_change  > 0.03 and funds > 10:
+        response = client.place_market_order(ticker_id, side ='buy', funds = funds)
+        print(response)
         print("Bought at lower cost")
     else:
         print('Passing')
-    time.sleep(30)
+    time.sleep(10)
